@@ -11,29 +11,29 @@ const Index = () => {
       <Navigation />
       
       {/* Hero Section */}
-      <section className="relative overflow-hidden">
-        <div className="absolute inset-0 bg-[var(--gradient-hero)] opacity-95"></div>
+      <section className="relative overflow-hidden bg-primary">
+        <div className="absolute inset-0 bg-[var(--gradient-hero)]"></div>
         <img 
           src={heroImage} 
           alt="Sustainable recycling manufacturing" 
-          className="absolute inset-0 w-full h-full object-cover mix-blend-overlay"
+          className="absolute inset-0 w-full h-full object-cover opacity-20"
         />
-        <div className="container relative mx-auto px-4 py-20 md:py-32">
+        <div className="container relative mx-auto px-4 py-24 md:py-40">
           <div className="max-w-3xl">
-            <h1 className="text-4xl md:text-6xl font-bold text-primary-foreground mb-6">
+            <h1 className="text-4xl md:text-6xl font-bold text-primary-foreground mb-6 drop-shadow-lg">
               Reliable Recycled Plastic for Growing Manufacturers
             </h1>
-            <p className="text-xl text-primary-foreground/90 mb-8 leading-relaxed">
+            <p className="text-xl text-primary-foreground/95 mb-8 leading-relaxed drop-shadow-md">
               Source verified, high-quality recycled plastic at fair prices. Meet your 25% compliance requirement with confidence.
             </p>
             <div className="flex flex-wrap gap-4">
               <Link to="/marketplace">
-                <Button size="lg" className="bg-accent hover:bg-accent/90 text-accent-foreground">
+                <Button size="lg" className="bg-accent hover:bg-accent/90 text-accent-foreground shadow-lg">
                   Explore Suppliers
                 </Button>
               </Link>
               <Link to="/dashboard">
-                <Button size="lg" variant="outline" className="bg-primary-foreground/10 border-primary-foreground/20 text-primary-foreground hover:bg-primary-foreground/20">
+                <Button size="lg" variant="outline" className="bg-background/10 backdrop-blur-sm border-primary-foreground/30 text-primary-foreground hover:bg-background/20">
                   View Dashboard
                 </Button>
               </Link>
