@@ -89,6 +89,70 @@ const Dashboard = () => {
           <PriceChart />
         </div>
 
+        {/* My Bookings */}
+        <Card className="shadow-[var(--shadow-soft)] mb-8">
+          <CardHeader>
+            <CardTitle>My Bookings</CardTitle>
+          </CardHeader>
+          <CardContent>
+            <div className="space-y-4">
+              {[
+                { 
+                  supplier: "GreenCycle Materials", 
+                  material: "rPET - Food Grade", 
+                  quantity: "5,000 kg", 
+                  date: "2024-02-01", 
+                  status: "Confirmed",
+                  totalCost: "$6,250"
+                },
+                { 
+                  supplier: "EcoResin Supply Co", 
+                  material: "rPP - Industrial", 
+                  quantity: "3,500 kg", 
+                  date: "2024-02-15", 
+                  status: "Pending Approval",
+                  totalCost: "$4,130"
+                },
+                { 
+                  supplier: "Circular Plastics Inc", 
+                  material: "rHDPE - Mixed", 
+                  quantity: "10,000 kg", 
+                  date: "2024-02-20", 
+                  status: "Pending Approval",
+                  totalCost: "$10,200"
+                },
+              ].map((booking, index) => (
+                <div key={index} className="flex items-center justify-between p-4 border border-border rounded-lg hover:bg-muted/50 transition-colors">
+                  <div className="space-y-1">
+                    <p className="font-semibold text-foreground">{booking.supplier}</p>
+                    <p className="text-sm text-muted-foreground">
+                      {booking.material} • {booking.quantity}
+                    </p>
+                    <p className="text-xs text-muted-foreground">
+                      Scheduled: {booking.date}
+                    </p>
+                  </div>
+                  <div className="text-right space-y-1">
+                    <p className="font-semibold text-foreground">{booking.totalCost}</p>
+                    <span className={`inline-block px-3 py-1 text-xs font-medium rounded-full ${
+                      booking.status === "Confirmed" 
+                        ? "bg-success/10 text-success" 
+                        : "bg-warning/10 text-warning"
+                    }`}>
+                      {booking.status}
+                    </span>
+                  </div>
+                  <div className="ml-4">
+                    <Button variant="outline" size="sm">
+                      View Details
+                    </Button>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </CardContent>
+        </Card>
+
         {/* Recent Orders */}
         <Card className="shadow-[var(--shadow-soft)]">
           <CardHeader>
