@@ -8,40 +8,53 @@ All colors MUST be HSL.
 
 @layer base {
   :root {
-    --background: 220 18% 97%;
-    --foreground: 220 15% 15%;
+    --background: 0 0% 100%;
+    --foreground: 210 12% 16%;
+
     --card: 0 0% 100%;
-    --card-foreground: 220 15% 15%;
+    --card-foreground: 210 12% 16%;
+
     --popover: 0 0% 100%;
-    --popover-foreground: 220 15% 15%;
-    --primary: 215 85% 28%;
+    --popover-foreground: 210 12% 16%;
+
+    /* Deep teal for trust and sustainability */
+    --primary: 180 48% 32%;
     --primary-foreground: 0 0% 100%;
-    --secondary: 220 15% 94%;
-    --secondary-foreground: 220 15% 20%;
-    --muted: 220 15% 95%;
-    --muted-foreground: 220 10% 40%;
-    --accent: 215 85% 35%;
+
+    /* Warm earth tone for secondary actions */
+    --secondary: 32 28% 88%;
+    --secondary-foreground: 210 12% 16%;
+
+    /* Muted backgrounds */
+    --muted: 210 20% 96%;
+    --muted-foreground: 210 10% 45%;
+
+    /* Bright green accent for CTAs and success */
+    --accent: 142 72% 45%;
     --accent-foreground: 0 0% 100%;
-    --destructive: 0 70% 50%;
+
+    --destructive: 0 84.2% 60.2%;
     --destructive-foreground: 0 0% 100%;
-    --border: 220 15% 88%;
-    --input: 220 15% 88%;
-    --ring: 215 85% 28%;
-    --radius: 0.375rem;
-    --trust: 142 65% 42%;
-    --success: 142 65% 42%;
-    --warning: 38 92% 50%;
-    --info: 215 85% 55%;
-    --pending: 38 92% 50%;
-    --chart-1: 215 85% 40%;
-    --chart-2: 142 65% 45%;
-    --chart-3: 38 92% 50%;
-    --chart-4: 220 60% 55%;
-    --chart-5: 280 65% 60%;
-    --gradient-hero: linear-gradient(135deg, hsl(215 85% 28% / 0.95), hsl(215 85% 35% / 0.9));
-    --shadow-soft: 0 1px 3px hsl(220 20% 30% / 0.08);
-    --shadow-medium: 0 2px 8px hsl(220 20% 30% / 0.12);
-    --shadow-strong: 0 4px 16px hsl(220 20% 30% / 0.16);
+
+    --border: 210 20% 90%;
+    --input: 210 20% 90%;
+    --ring: 180 48% 32%;
+
+    --radius: 0.5rem;
+    
+    /* Custom tokens for the platform */
+    --trust-blue: 210 80% 52%;
+    --success-green: 142 72% 45%;
+    --warning-amber: 38 92% 50%;
+    
+    /* Gradients */
+    --gradient-hero: linear-gradient(135deg, hsl(180 48% 32%), hsl(180 55% 42%));
+    --gradient-card: linear-gradient(180deg, hsl(0 0% 100%), hsl(210 20% 98%));
+    
+    /* Shadows */
+    --shadow-soft: 0 2px 8px -2px hsl(210 12% 16% / 0.08);
+    --shadow-medium: 0 4px 12px -2px hsl(210 12% 16% / 0.12);
+    --shadow-strong: 0 8px 24px -4px hsl(210 12% 16% / 0.16);
 
     --sidebar-background: 0 0% 98%;
 
@@ -61,39 +74,41 @@ All colors MUST be HSL.
   }
 
   .dark {
-    --background: 220 18% 8%;
-    --foreground: 220 10% 95%;
-    --card: 220 15% 10%;
-    --card-foreground: 220 10% 95%;
-    --popover: 220 15% 10%;
-    --popover-foreground: 220 10% 95%;
-    --primary: 215 85% 45%;
+    --background: 210 18% 12%;
+    --foreground: 210 10% 92%;
+
+    --card: 210 18% 15%;
+    --card-foreground: 210 10% 92%;
+
+    --popover: 210 18% 15%;
+    --popover-foreground: 210 10% 92%;
+
+    --primary: 180 55% 42%;
     --primary-foreground: 0 0% 100%;
-    --secondary: 220 15% 16%;
-    --secondary-foreground: 220 10% 90%;
-    --muted: 220 15% 16%;
-    --muted-foreground: 220 10% 55%;
-    --accent: 215 85% 50%;
+
+    --secondary: 210 15% 22%;
+    --secondary-foreground: 210 10% 92%;
+
+    --muted: 210 15% 22%;
+    --muted-foreground: 210 10% 65%;
+
+    --accent: 142 72% 45%;
     --accent-foreground: 0 0% 100%;
-    --destructive: 0 70% 50%;
+
+    --destructive: 0 62.8% 50%;
     --destructive-foreground: 0 0% 100%;
-    --border: 220 15% 20%;
-    --input: 220 15% 20%;
-    --ring: 215 85% 45%;
-    --trust: 142 65% 48%;
-    --success: 142 65% 48%;
-    --warning: 38 92% 55%;
-    --info: 215 85% 60%;
-    --pending: 38 92% 55%;
-    --chart-1: 215 85% 50%;
-    --chart-2: 142 65% 50%;
-    --chart-3: 38 92% 55%;
-    --chart-4: 220 60% 60%;
-    --chart-5: 280 65% 65%;
-    --gradient-hero: linear-gradient(135deg, hsl(215 85% 25% / 0.95), hsl(215 85% 30% / 0.9));
-    --shadow-soft: 0 1px 3px hsl(0 0% 0% / 0.3);
-    --shadow-medium: 0 2px 8px hsl(0 0% 0% / 0.4);
-    --shadow-strong: 0 4px 16px hsl(0 0% 0% / 0.5);
+
+    --border: 210 15% 22%;
+    --input: 210 15% 22%;
+    --ring: 180 55% 42%;
+    
+    --trust-blue: 210 80% 60%;
+    --success-green: 142 72% 50%;
+    --warning-amber: 38 92% 55%;
+    
+    --shadow-soft: 0 2px 8px -2px hsl(0 0% 0% / 0.24);
+    --shadow-medium: 0 4px 12px -2px hsl(0 0% 0% / 0.32);
+    --shadow-strong: 0 8px 24px -4px hsl(0 0% 0% / 0.40);
     --sidebar-background: 240 5.9% 10%;
     --sidebar-foreground: 240 4.8% 95.9%;
     --sidebar-primary: 224.3 76.3% 48%;

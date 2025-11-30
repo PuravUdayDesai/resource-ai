@@ -12,18 +12,14 @@ import {
   Truck, 
   Star,
   FileCheck,
-  AlertCircle,
-  FileText
+  AlertCircle
 } from "lucide-react";
 import { useState } from "react";
 import BookingModal from "@/components/BookingModal";
-import RFQModal from "@/components/RFQModal";
-import CompanyProfile from "@/components/CompanyProfile";
 
 const SupplierDetail = () => {
   const { id } = useParams();
   const [isBookingOpen, setIsBookingOpen] = useState(false);
-  const [isRFQOpen, setIsRFQOpen] = useState(false);
 
   // Mock data - in production this would come from API
   const supplier = {
@@ -286,20 +282,12 @@ const SupplierDetail = () => {
                 <Button 
                   className="w-full mb-3" 
                   size="lg"
-                  onClick={() => setIsRFQOpen(true)}
-                >
-                  <FileText className="h-4 w-4 mr-2" />
-                  Request Quote (RFQ)
-                </Button>
-                <Button 
-                  variant="outline" 
-                  className="w-full mb-3"
                   onClick={() => setIsBookingOpen(true)}
                 >
                   <Package className="h-4 w-4 mr-2" />
-                  Direct Booking
+                  Book Material
                 </Button>
-                <Button variant="outline" className="w-full text-sm">
+                <Button variant="outline" className="w-full">
                   Contact Supplier
                 </Button>
                 <div className="mt-4 p-3 bg-muted/50 rounded-lg">
@@ -359,9 +347,6 @@ const SupplierDetail = () => {
                 </div>
               </CardContent>
             </Card>
-
-            {/* Company Profile */}
-            <CompanyProfile type="supplier" />
           </div>
         </div>
       </div>
@@ -369,13 +354,6 @@ const SupplierDetail = () => {
       <BookingModal
         isOpen={isBookingOpen}
         onClose={() => setIsBookingOpen(false)}
-        supplier={supplier}
-        material={selectedMaterial}
-      />
-
-      <RFQModal
-        isOpen={isRFQOpen}
-        onClose={() => setIsRFQOpen(false)}
         supplier={supplier}
         material={selectedMaterial}
       />

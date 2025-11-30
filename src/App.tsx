@@ -6,7 +6,6 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Index from "./pages/Index";
 import Marketplace from "./pages/Marketplace";
 import Dashboard from "./pages/Dashboard";
-import EnhancedDashboard from "./pages/EnhancedDashboard";
 import SupplierDetail from "./pages/SupplierDetail";
 import NotFound from "./pages/NotFound";
 
@@ -22,8 +21,7 @@ const App = () => (
           <Route path="/" element={<Index />} />
           <Route path="/marketplace" element={<Marketplace />} />
           <Route path="/supplier/:id" element={<SupplierDetail />} />
-          <Route path="/dashboard" element={<EnhancedDashboard />} />
-          <Route path="/dashboard-simple" element={<Dashboard />} />
+          <Route path="/dashboard" element={<Dashboard />} />
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           <Route path="*" element={<NotFound />} />
         </Routes>
