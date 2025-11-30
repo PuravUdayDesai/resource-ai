@@ -2,6 +2,7 @@ import { Card, CardContent, CardFooter, CardHeader } from "./ui/card";
 import { Badge } from "./ui/badge";
 import { Button } from "./ui/button";
 import { CheckCircle2, MapPin, Package } from "lucide-react";
+import { Link } from "react-router-dom";
 
 interface SupplierCardProps {
   name: string;
@@ -80,9 +81,11 @@ const SupplierCard = ({
         </div>
       </CardContent>
       <CardFooter>
-        <Button className="w-full bg-primary hover:bg-primary/90">
-          View Details
-        </Button>
+        <Link to={`/supplier/${name.toLowerCase().replace(/\s+/g, '-')}`} className="w-full">
+          <Button className="w-full bg-primary hover:bg-primary/90">
+            View Details
+          </Button>
+        </Link>
       </CardFooter>
     </Card>
   );
