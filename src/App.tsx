@@ -7,6 +7,11 @@ import Index from "./pages/Index";
 import Marketplace from "./pages/Marketplace";
 import Dashboard from "./pages/Dashboard";
 import EnhancedDashboard from "./pages/EnhancedDashboard";
+import QuoteComparison from "./pages/QuoteComparison";
+import OrderConfirmation from "./pages/OrderConfirmation";
+import OrderTracking from "./pages/OrderTracking";
+import DeliveryConfirmation from "./pages/DeliveryConfirmation";
+import OrderCompletion from "./pages/OrderCompletion";
 import SupplierDetail from "./pages/SupplierDetail";
 import NotFound from "./pages/NotFound";
 
@@ -24,6 +29,11 @@ const App = () => (
           <Route path="/supplier/:id" element={<SupplierDetail />} />
           <Route path="/dashboard" element={<EnhancedDashboard />} />
           <Route path="/dashboard-simple" element={<Dashboard />} />
+          <Route path="/quote-comparison" element={<QuoteComparison />} />
+          <Route path="/order-confirmation" element={<OrderConfirmation />} />
+          <Route path="/order-tracking" element={<OrderTracking />} />
+          <Route path="/delivery-confirmation" element={<DeliveryConfirmation />} />
+          <Route path="/order-completion" element={<OrderCompletion />} />
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           <Route path="*" element={<NotFound />} />
         </Routes>
