@@ -1,3 +1,4 @@
+import { useNavigate } from "react-router-dom";
 import Navigation from "@/components/Navigation";
 import ComplianceTracker from "@/components/ComplianceTracker";
 import PriceChart from "@/components/PriceChart";
@@ -25,6 +26,7 @@ import {
 } from "lucide-react";
 
 const EnhancedDashboard = () => {
+  const navigate = useNavigate();
   const rfqs = [
     { 
       id: "RFQ-2024-001",
@@ -250,7 +252,11 @@ const EnhancedDashboard = () => {
                               </TableCell>
                               <TableCell className="font-semibold">{rfq.quotedPrice}</TableCell>
                               <TableCell className="text-right">
-                                <Button variant="ghost" size="sm">
+                                <Button 
+                                  variant="ghost" 
+                                  size="sm"
+                                  onClick={() => navigate(`/quote-comparison?rfqId=${rfq.id}`)}
+                                >
                                   <Eye className="h-4 w-4" />
                                 </Button>
                               </TableCell>
@@ -289,7 +295,11 @@ const EnhancedDashboard = () => {
                               </TableCell>
                               <TableCell className="font-semibold">{order.totalValue}</TableCell>
                               <TableCell className="text-right">
-                                <Button variant="ghost" size="sm">
+                                <Button 
+                                  variant="ghost" 
+                                  size="sm"
+                                  onClick={() => navigate(`/order-tracking?orderId=${order.orderId}`)}
+                                >
                                   <Eye className="h-4 w-4" />
                                 </Button>
                               </TableCell>
@@ -328,7 +338,11 @@ const EnhancedDashboard = () => {
                               </TableCell>
                               <TableCell className="font-semibold">{order.totalValue}</TableCell>
                               <TableCell className="text-right">
-                                <Button variant="ghost" size="sm">
+                                <Button 
+                                  variant="ghost" 
+                                  size="sm"
+                                  onClick={() => navigate(`/order-completion?orderId=${order.orderId}`)}
+                                >
                                   <Download className="h-4 w-4" />
                                 </Button>
                               </TableCell>
