@@ -4,6 +4,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Separator } from "@/components/ui/separator";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { 
   MapPin, 
   Package, 
@@ -19,6 +20,14 @@ import { useState } from "react";
 import BookingModal from "@/components/BookingModal";
 import RFQModal from "@/components/RFQModal";
 import CompanyProfile from "@/components/CompanyProfile";
+import {
+  AIVerifiedBadge,
+  BatchQualityPanel,
+  AIQualityReport,
+  PhotoAnalysisSection,
+  CompliancePanel,
+  AITransparencyAccordion,
+} from "@/components/ai-qc";
 
 const SupplierDetail = () => {
   const { id } = useParams();
@@ -85,6 +94,60 @@ const SupplierDetail = () => {
     ]
   };
 
+  // Mock AI Quality Control data
+  const batchQualityData = {
+    batchId: "GCM-2024-0847",
+    aiQualityScore: 92,
+    contaminationRisk: "low" as const,
+    materialConsistency: 94,
+    historicalMatchScore: 89,
+    verificationStatus: "verified" as const,
+  };
+
+  const aiQualityReport = {
+    batchId: "GCM-2024-0847",
+    verificationStatus: "verified" as const,
+    confidenceScore: 94,
+    analysisTimestamp: "2024-01-15 14:32:18 UTC",
+    modelVersion: "ReSource-QC-v2.4.1",
+    purityPercentage: 98.2,
+    contaminantIndicators: [
+      { type: "Foreign Polymers", level: "trace" as const, details: "Minimal PP contamination detected (<0.3%)" },
+      { type: "Metal Particles", level: "none" as const, details: "No metallic contaminants detected" },
+      { type: "Organic Matter", level: "trace" as const, details: "Negligible organic residue" },
+      { type: "Color Variance", level: "none" as const, details: "Consistent color profile" },
+    ],
+    visualAnomalies: {
+      detected: false,
+      count: 0,
+      description: "No visual anomalies detected. Material shows consistent pellet size and uniform coloration.",
+    },
+    verdict: "This batch meets ReSource AI quality standards for food-grade rPET applications. High purity and minimal contamination make it suitable for direct manufacturing use.",
+  };
+
+  const analyzedImages = [
+    { id: "1", originalUrl: "", hasAnnotations: false, annotationType: "none" as const, annotationCount: 0, caption: "Sample overview - clear pellets, uniform size" },
+    { id: "2", originalUrl: "", hasAnnotations: false, annotationType: "none" as const, annotationCount: 0, caption: "Close-up analysis - no contamination detected" },
+    { id: "3", originalUrl: "", hasAnnotations: true, annotationType: "irregularity" as const, annotationCount: 1, caption: "Minor color variance in batch section" },
+    { id: "4", originalUrl: "", hasAnnotations: false, annotationType: "none" as const, annotationCount: 0, caption: "Pellet size distribution check passed" },
+    { id: "5", originalUrl: "", hasAnnotations: false, annotationType: "none" as const, annotationCount: 0, caption: "Surface texture analysis - consistent" },
+    { id: "6", originalUrl: "", hasAnnotations: false, annotationType: "none" as const, annotationCount: 0, caption: "Random sample verification complete" },
+  ];
+
+  const complianceData = {
+    isComplianceReady: true,
+    foodGradeRisk: "low" as const,
+    industrialGradeSuitability: "suitable" as const,
+    exportComplianceReadiness: "ready" as const,
+    summary: "This batch has been AI-verified and meets compliance requirements for food-grade applications. All certifications are current and chain-of-custody documentation is complete.",
+    documents: [
+      { name: "AI Quality Report", available: true, type: "report" as const },
+      { name: "Batch Verification Certificate", available: true, type: "certificate" as const },
+      { name: "Chain of Custody Document", available: true, type: "certificate" as const },
+      { name: "FDA Compliance Letter", available: true, type: "certificate" as const },
+    ],
+  };
+
   const [selectedMaterial, setSelectedMaterial] = useState(supplier.materials[0]);
 
   return (
@@ -113,6 +176,7 @@ const SupplierDetail = () => {
                     Verified
                   </Badge>
                 )}
+                <AIVerifiedBadge status="verified" size="md" />
               </div>
               <div className="flex items-center gap-4 text-muted-foreground">
                 <span className="flex items-center gap-1">
@@ -131,142 +195,183 @@ const SupplierDetail = () => {
         <div className="grid lg:grid-cols-3 gap-8">
           {/* Main Content */}
           <div className="lg:col-span-2 space-y-6">
-            {/* Material Selection */}
-            <Card className="shadow-[var(--shadow-soft)]">
-              <CardHeader>
-                <CardTitle>Available Materials</CardTitle>
-              </CardHeader>
-              <CardContent>
-                <div className="grid md:grid-cols-2 gap-4 mb-6">
-                  {supplier.materials.map((material, idx) => (
-                    <div
-                      key={idx}
-                      onClick={() => setSelectedMaterial(material)}
-                      className={`p-4 rounded-lg border-2 cursor-pointer transition-all ${
-                        selectedMaterial.type === material.type
-                          ? "border-primary bg-primary/5"
-                          : "border-border hover:border-primary/50"
-                      }`}
-                    >
-                      <div className="flex items-center justify-between mb-2">
-                        <span className="font-semibold text-lg">{material.type}</span>
-                        <Badge variant="secondary">{material.grade}</Badge>
-                      </div>
-                      <p className="text-sm text-muted-foreground mb-1">
-                        ${material.price}/kg
-                      </p>
-                      <p className="text-xs text-muted-foreground">
-                        Available: {(material.available / 1000).toFixed(0)}+ tons
-                      </p>
-                    </div>
-                  ))}
-                </div>
+            <Tabs defaultValue="materials" className="w-full">
+              <TabsList className="grid w-full grid-cols-2 mb-6">
+                <TabsTrigger value="materials">Materials & Specs</TabsTrigger>
+                <TabsTrigger value="ai-quality">AI Quality Control</TabsTrigger>
+              </TabsList>
 
-                <Separator className="my-6" />
-
-                {/* Selected Material Details */}
-                <div className="space-y-4">
-                  <h3 className="font-semibold text-xl">
-                    {selectedMaterial.type} - {selectedMaterial.grade}
-                  </h3>
-                  
-                  <div className="grid md:grid-cols-2 gap-4">
-                    <div>
-                      <p className="text-sm text-muted-foreground mb-1">Color</p>
-                      <p className="font-medium">{selectedMaterial.color}</p>
-                    </div>
-                    <div>
-                      <p className="text-sm text-muted-foreground mb-1">MFI</p>
-                      <p className="font-medium">{selectedMaterial.mfi}</p>
-                    </div>
-                    <div>
-                      <p className="text-sm text-muted-foreground mb-1">Contamination</p>
-                      <p className="font-medium">{selectedMaterial.contamination}</p>
-                    </div>
-                    <div>
-                      <p className="text-sm text-muted-foreground mb-1">Pellet Size</p>
-                      <p className="font-medium">{selectedMaterial.pelletSize}</p>
-                    </div>
-                  </div>
-
-                  <Separator />
-
-                  <div>
-                    <h4 className="font-semibold mb-3">Pricing</h4>
-                    <div className="space-y-2">
-                      <div className="flex justify-between items-center p-3 bg-muted/50 rounded-lg">
-                        <span className="text-sm">Base Price (MOQ: {selectedMaterial.moq.toLocaleString()} kg)</span>
-                        <span className="font-bold text-lg">${selectedMaterial.price}/kg</span>
-                      </div>
-                      {selectedMaterial.bulkPricing.map((tier, idx) => (
-                        <div key={idx} className="flex justify-between items-center p-3 bg-muted/30 rounded-lg">
-                          <span className="text-sm">{tier.quantity.toLocaleString()}+ kg</span>
-                          <span className="font-semibold">${tier.price}/kg</span>
+              <TabsContent value="materials" className="space-y-6">
+                {/* Material Selection */}
+                <Card className="shadow-[var(--shadow-soft)]">
+                  <CardHeader>
+                    <CardTitle>Available Materials</CardTitle>
+                  </CardHeader>
+                  <CardContent>
+                    <div className="grid md:grid-cols-2 gap-4 mb-6">
+                      {supplier.materials.map((material, idx) => (
+                        <div
+                          key={idx}
+                          onClick={() => setSelectedMaterial(material)}
+                          className={`p-4 rounded-lg border-2 cursor-pointer transition-all ${
+                            selectedMaterial.type === material.type
+                              ? "border-primary bg-primary/5"
+                              : "border-border hover:border-primary/50"
+                          }`}
+                        >
+                          <div className="flex items-center justify-between mb-2">
+                            <div className="flex items-center gap-2">
+                              <span className="font-semibold text-lg">{material.type}</span>
+                              <AIVerifiedBadge status="verified" size="sm" showLabel={false} />
+                            </div>
+                            <Badge variant="secondary">{material.grade}</Badge>
+                          </div>
+                          <p className="text-sm text-muted-foreground mb-1">
+                            ${material.price}/kg
+                          </p>
+                          <p className="text-xs text-muted-foreground">
+                            Available: {(material.available / 1000).toFixed(0)}+ tons
+                          </p>
                         </div>
                       ))}
                     </div>
-                  </div>
-                </div>
-              </CardContent>
-            </Card>
 
-            {/* Logistics */}
-            <Card className="shadow-[var(--shadow-soft)]">
-              <CardHeader>
-                <CardTitle className="flex items-center gap-2">
-                  <Truck className="h-5 w-5" />
-                  Logistics & Delivery
-                </CardTitle>
-              </CardHeader>
-              <CardContent>
-                <div className="grid md:grid-cols-2 gap-4">
-                  <div>
-                    <p className="text-sm text-muted-foreground mb-1">Options</p>
-                    <div className="flex gap-2">
-                      {supplier.logistics.pickup && (
-                        <Badge variant="secondary">Pickup Available</Badge>
-                      )}
-                      {supplier.logistics.delivery && (
-                        <Badge variant="secondary">Delivery Available</Badge>
-                      )}
-                    </div>
-                  </div>
-                  <div>
-                    <p className="text-sm text-muted-foreground mb-1">Lead Time</p>
-                    <p className="font-medium">{supplier.logistics.leadTime}</p>
-                  </div>
-                  <div className="md:col-span-2">
-                    <p className="text-sm text-muted-foreground mb-1">Freight Cost</p>
-                    <p className="font-medium">{supplier.logistics.estimatedFreight}</p>
-                  </div>
-                </div>
-              </CardContent>
-            </Card>
+                    <Separator className="my-6" />
 
-            {/* Reviews */}
-            <Card className="shadow-[var(--shadow-soft)]">
-              <CardHeader>
-                <CardTitle>Recent Reviews</CardTitle>
-              </CardHeader>
-              <CardContent>
-                <div className="space-y-4">
-                  {supplier.reviews.map((review, idx) => (
-                    <div key={idx} className="border-b border-border last:border-0 pb-4 last:pb-0">
-                      <div className="flex items-center justify-between mb-2">
-                        <span className="font-semibold">{review.author}</span>
-                        <div className="flex items-center gap-1">
-                          {Array.from({ length: review.rating }).map((_, i) => (
-                            <Star key={i} className="h-4 w-4 fill-warning text-warning" />
+                    {/* Selected Material Details */}
+                    <div className="space-y-4">
+                      <h3 className="font-semibold text-xl">
+                        {selectedMaterial.type} - {selectedMaterial.grade}
+                      </h3>
+                      
+                      <div className="grid md:grid-cols-2 gap-4">
+                        <div>
+                          <p className="text-sm text-muted-foreground mb-1">Color</p>
+                          <p className="font-medium">{selectedMaterial.color}</p>
+                        </div>
+                        <div>
+                          <p className="text-sm text-muted-foreground mb-1">MFI</p>
+                          <p className="font-medium">{selectedMaterial.mfi}</p>
+                        </div>
+                        <div>
+                          <p className="text-sm text-muted-foreground mb-1">Contamination</p>
+                          <p className="font-medium">{selectedMaterial.contamination}</p>
+                        </div>
+                        <div>
+                          <p className="text-sm text-muted-foreground mb-1">Pellet Size</p>
+                          <p className="font-medium">{selectedMaterial.pelletSize}</p>
+                        </div>
+                      </div>
+
+                      <Separator />
+
+                      <div>
+                        <h4 className="font-semibold mb-3">Pricing</h4>
+                        <div className="space-y-2">
+                          <div className="flex justify-between items-center p-3 bg-muted/50 rounded-lg">
+                            <span className="text-sm">Base Price (MOQ: {selectedMaterial.moq.toLocaleString()} kg)</span>
+                            <span className="font-bold text-lg">${selectedMaterial.price}/kg</span>
+                          </div>
+                          {selectedMaterial.bulkPricing.map((tier, idx) => (
+                            <div key={idx} className="flex justify-between items-center p-3 bg-muted/30 rounded-lg">
+                              <span className="text-sm">{tier.quantity.toLocaleString()}+ kg</span>
+                              <span className="font-semibold">${tier.price}/kg</span>
+                            </div>
                           ))}
                         </div>
                       </div>
-                      <p className="text-sm text-muted-foreground mb-1">{review.comment}</p>
-                      <p className="text-xs text-muted-foreground">{review.date}</p>
                     </div>
-                  ))}
-                </div>
-              </CardContent>
-            </Card>
+                  </CardContent>
+                </Card>
+
+                {/* Logistics */}
+                <Card className="shadow-[var(--shadow-soft)]">
+                  <CardHeader>
+                    <CardTitle className="flex items-center gap-2">
+                      <Truck className="h-5 w-5" />
+                      Logistics & Delivery
+                    </CardTitle>
+                  </CardHeader>
+                  <CardContent>
+                    <div className="grid md:grid-cols-2 gap-4">
+                      <div>
+                        <p className="text-sm text-muted-foreground mb-1">Options</p>
+                        <div className="flex gap-2">
+                          {supplier.logistics.pickup && (
+                            <Badge variant="secondary">Pickup Available</Badge>
+                          )}
+                          {supplier.logistics.delivery && (
+                            <Badge variant="secondary">Delivery Available</Badge>
+                          )}
+                        </div>
+                      </div>
+                      <div>
+                        <p className="text-sm text-muted-foreground mb-1">Lead Time</p>
+                        <p className="font-medium">{supplier.logistics.leadTime}</p>
+                      </div>
+                      <div className="md:col-span-2">
+                        <p className="text-sm text-muted-foreground mb-1">Freight Cost</p>
+                        <p className="font-medium">{supplier.logistics.estimatedFreight}</p>
+                      </div>
+                    </div>
+                  </CardContent>
+                </Card>
+
+                {/* Reviews */}
+                <Card className="shadow-[var(--shadow-soft)]">
+                  <CardHeader>
+                    <CardTitle>Recent Reviews</CardTitle>
+                  </CardHeader>
+                  <CardContent>
+                    <div className="space-y-4">
+                      {supplier.reviews.map((review, idx) => (
+                        <div key={idx} className="border-b border-border last:border-0 pb-4 last:pb-0">
+                          <div className="flex items-center justify-between mb-2">
+                            <span className="font-semibold">{review.author}</span>
+                            <div className="flex items-center gap-1">
+                              {Array.from({ length: review.rating }).map((_, i) => (
+                                <Star key={i} className="h-4 w-4 fill-warning text-warning" />
+                              ))}
+                            </div>
+                          </div>
+                          <p className="text-sm text-muted-foreground mb-1">{review.comment}</p>
+                          <p className="text-xs text-muted-foreground">{review.date}</p>
+                        </div>
+                      ))}
+                    </div>
+                  </CardContent>
+                </Card>
+              </TabsContent>
+
+              <TabsContent value="ai-quality" className="space-y-6">
+                {/* Batch Quality Overview */}
+                <BatchQualityPanel batch={batchQualityData} />
+
+                {/* AI Quality Report Button */}
+                <Card className="shadow-[var(--shadow-soft)]">
+                  <CardContent className="pt-6">
+                    <div className="flex items-center justify-between">
+                      <div>
+                        <h3 className="font-semibold mb-1">Detailed AI Analysis</h3>
+                        <p className="text-sm text-muted-foreground">
+                          View comprehensive quality report with contamination analysis, visual inspection results, and compliance assessment.
+                        </p>
+                      </div>
+                      <AIQualityReport report={aiQualityReport} />
+                    </div>
+                  </CardContent>
+                </Card>
+
+                {/* Photo Analysis Section */}
+                <PhotoAnalysisSection images={analyzedImages} />
+
+                {/* Compliance Panel */}
+                <CompliancePanel compliance={complianceData} />
+
+                {/* AI Transparency */}
+                <AITransparencyAccordion />
+              </TabsContent>
+            </Tabs>
           </div>
 
           {/* Sidebar */}
