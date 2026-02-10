@@ -28,6 +28,7 @@ import {
   CompliancePanel,
   AITransparencyAccordion,
 } from "@/components/ai-qc";
+import AlexMascot from "@/components/ai-qc/AlexMascot";
 
 const SupplierDetail = () => {
   const { id } = useParams();
@@ -102,6 +103,8 @@ const SupplierDetail = () => {
     materialConsistency: 94,
     historicalMatchScore: 89,
     verificationStatus: "verified" as const,
+    materialClassification: "HDPE",
+    classificationConfidence: 92,
   };
 
   const aiQualityReport = {
@@ -344,6 +347,12 @@ const SupplierDetail = () => {
               </TabsContent>
 
               <TabsContent value="ai-quality" className="space-y-6">
+                {/* Alex Mascot Guidance */}
+                <AlexMascot 
+                  message="Poor-quality recycled material can create compliance risk and disrupt production. This AI Quality Control layer helps you assess batches before committing, so you can source with confidence."
+                  compact
+                />
+
                 {/* Batch Quality Overview */}
                 <BatchQualityPanel batch={batchQualityData} />
 

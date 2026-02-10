@@ -14,3 +14,5 @@ export { default as CompliancePanel } from "./CompliancePanel";
 export type { ComplianceData } from "./CompliancePanel";
 
 export { default as AITransparencyAccordion } from "./AITransparencyAccordion";
+
+export { default as AlexMascot } from "./AlexMascot";

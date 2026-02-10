@@ -12,6 +12,8 @@ interface BatchQualityData {
   materialConsistency: number;
   historicalMatchScore: number;
   verificationStatus: VerificationStatus;
+  materialClassification?: string;
+  classificationConfidence?: number;
 }
 
 interface BatchQualityPanelProps {
@@ -87,6 +89,36 @@ const BatchQualityPanel = ({ batch, className }: BatchQualityPanelProps) => {
             {riskConfig.label}
           </Badge>
         </div>
+
+        {/* Material Classification Confidence */}
+        {batch.materialClassification && batch.classificationConfidence && (
+          <div className="space-y-2">
+            <div className="flex items-center justify-between">
+              <div className="flex items-center gap-2">
+                <BarChart3 className="h-4 w-4 text-muted-foreground" />
+                <span className="text-sm font-medium">Material Classification</span>
+              </div>
+              <div className="flex items-center gap-2">
+                <span className="text-sm font-semibold">{batch.materialClassification}</span>
+                <span className={cn(
+                  "text-xs font-bold",
+                  batch.classificationConfidence >= 80 ? "text-success" :
+                  batch.classificationConfidence >= 60 ? "text-warning" : "text-destructive"
+                )}>
+                  {batch.classificationConfidence}%
+                </span>
+              </div>
+            </div>
+            <Progress 
+              value={batch.classificationConfidence} 
+              className="h-2"
+              indicatorClassName={getScoreColor(batch.classificationConfidence)}
+            />
+            <p className="text-xs text-muted-foreground">
+              AI confidence in material type identification
+            </p>
+          </div>
+        )}
 
         {/* Material Consistency */}
         <div className="space-y-2">

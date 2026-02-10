@@ -3,6 +3,7 @@ import { Badge } from "./ui/badge";
 import { Button } from "./ui/button";
 import { CheckCircle2, MapPin, Package } from "lucide-react";
 import { Link } from "react-router-dom";
+import { AIVerifiedBadge, VerificationStatus } from "./ai-qc";
 
 interface SupplierCardProps {
   name: string;
@@ -12,6 +13,7 @@ interface SupplierCardProps {
   priceRange: string;
   verified: boolean;
   certifications: string[];
+  aiVerificationStatus?: VerificationStatus;
 }
 
 const SupplierCard = ({
@@ -22,6 +24,7 @@ const SupplierCard = ({
   priceRange,
   verified,
   certifications,
+  aiVerificationStatus,
 }: SupplierCardProps) => {
   return (
     <Card className="hover:shadow-[var(--shadow-medium)] transition-shadow duration-300">
@@ -32,6 +35,9 @@ const SupplierCard = ({
               {name}
               {verified && (
                 <CheckCircle2 className="h-5 w-5 text-trust" />
+              )}
+              {aiVerificationStatus && (
+                <AIVerifiedBadge status={aiVerificationStatus} size="sm" showLabel={false} />
               )}
             </h3>
             <div className="flex items-center gap-1 text-sm text-muted-foreground mt-1">
