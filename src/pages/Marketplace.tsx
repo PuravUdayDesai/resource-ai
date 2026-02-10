@@ -14,6 +14,7 @@ const mockSuppliers = [
     priceRange: "$1.20-1.35/kg",
     verified: true,
     certifications: ["FDA", "ISO 9001", "GRS"],
+    aiVerificationStatus: "verified" as const,
   },
   {
     name: "EcoResin Supply Co",
@@ -23,6 +24,7 @@ const mockSuppliers = [
     priceRange: "$1.15-1.28/kg",
     verified: true,
     certifications: ["FDA", "ISO 14001"],
+    aiVerificationStatus: "verified" as const,
   },
   {
     name: "Circular Plastics Inc",
@@ -32,6 +34,7 @@ const mockSuppliers = [
     priceRange: "$0.95-1.10/kg",
     verified: true,
     certifications: ["ISO 9001", "Chain of Custody"],
+    aiVerificationStatus: "conditional" as const,
   },
   {
     name: "Renewed Resources",
@@ -41,6 +44,7 @@ const mockSuppliers = [
     priceRange: "$1.10-1.30/kg",
     verified: true,
     certifications: ["FDA", "GRS", "ISO 9001"],
+    aiVerificationStatus: "verified" as const,
   },
   {
     name: "Pacific PCR Solutions",
@@ -50,6 +54,7 @@ const mockSuppliers = [
     priceRange: "$1.25-1.40/kg",
     verified: true,
     certifications: ["FDA", "ISO 9001", "ISO 14001"],
+    aiVerificationStatus: "not-verified" as const,
   },
   {
     name: "Midwest Reclaimed Plastics",
@@ -59,6 +64,7 @@ const mockSuppliers = [
     priceRange: "$0.98-1.15/kg",
     verified: true,
     certifications: ["ISO 9001", "Chain of Custody"],
+    aiVerificationStatus: "conditional" as const,
   },
 ];
 
