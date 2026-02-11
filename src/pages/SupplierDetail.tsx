@@ -1,5 +1,6 @@
 import { useParams, Link } from "react-router-dom";
 import Navigation from "@/components/Navigation";
+import Footer from "@/components/Footer";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
@@ -20,6 +21,7 @@ import { useState } from "react";
 import BookingModal from "@/components/BookingModal";
 import RFQModal from "@/components/RFQModal";
 import CompanyProfile from "@/components/CompanyProfile";
+import { toast } from "@/hooks/use-toast";
 import {
   AIVerifiedBadge,
   BatchQualityPanel,
@@ -413,7 +415,7 @@ const SupplierDetail = () => {
                   <Package className="h-4 w-4 mr-2" />
                   Direct Booking
                 </Button>
-                <Button variant="outline" className="w-full text-sm">
+                <Button variant="outline" className="w-full text-sm" onClick={() => toast({ title: "Contact Supplier", description: "Messaging will be available soon. Use the RFQ form to reach the supplier." })}>
                   Contact Supplier
                 </Button>
                 <div className="mt-4 p-3 bg-muted/50 rounded-lg">
@@ -447,7 +449,7 @@ const SupplierDetail = () => {
                     </div>
                   ))}
                 </div>
-                <Button variant="link" className="w-full mt-4 text-xs">
+                <Button variant="link" className="w-full mt-4 text-xs" onClick={() => toast({ title: "Documents", description: "Full document viewer coming soon." })}>
                   View All Documents →
                 </Button>
               </CardContent>
@@ -493,6 +495,7 @@ const SupplierDetail = () => {
         supplier={supplier}
         material={selectedMaterial}
       />
+      <Footer />
     </div>
   );
 };

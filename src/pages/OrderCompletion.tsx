@@ -1,5 +1,6 @@
 import { useNavigate, useSearchParams } from "react-router-dom";
 import Navigation from "@/components/Navigation";
+import Footer from "@/components/Footer";
 import { Button } from "@/components/ui/button";
 import CompletionCertificate from "@/components/CompletionCertificate";
 import { Download, CheckCircle2, Home } from "lucide-react";
@@ -43,7 +44,7 @@ const OrderCompletion = () => {
   };
 
   return (
-    <div className="min-h-screen bg-background">
+    <div className="min-h-screen bg-background flex flex-col">
       <Navigation />
       
       <main className="container mx-auto px-4 py-8 max-w-4xl">
@@ -101,7 +102,7 @@ const OrderCompletion = () => {
           <div className="grid md:grid-cols-2 gap-3 pt-4">
             <Button 
               variant="outline"
-              onClick={() => navigate("/enhanced-dashboard")}
+              onClick={() => navigate("/dashboard")}
             >
               <Home className="h-4 w-4 mr-2" />
               Go to Dashboard
@@ -138,6 +139,7 @@ const OrderCompletion = () => {
           </ul>
         </div>
       </main>
+      <Footer />
     </div>
   );
 };

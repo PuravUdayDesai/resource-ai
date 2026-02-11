@@ -1,5 +1,6 @@
 import { useNavigate, useSearchParams } from "react-router-dom";
 import Navigation from "@/components/Navigation";
+import Footer from "@/components/Footer";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
@@ -60,7 +61,7 @@ const OrderTracking = () => {
   };
 
   return (
-    <div className="min-h-screen bg-background">
+    <div className="min-h-screen bg-background flex flex-col">
       <Navigation />
       
       <main className="container mx-auto px-4 py-8 max-w-6xl">
@@ -71,7 +72,7 @@ const OrderTracking = () => {
               <h1 className="text-3xl font-bold mb-2">Order Tracking</h1>
               <p className="text-muted-foreground">Order ID: {orderData.orderId}</p>
             </div>
-            <Button variant="outline" onClick={() => navigate("/enhanced-dashboard")}>
+            <Button variant="outline" onClick={() => navigate("/dashboard")}>
               View All Orders
             </Button>
           </div>
@@ -264,10 +265,10 @@ const OrderTracking = () => {
                 >
                   Mark as Received
                 </Button>
-                <Button variant="outline" className="w-full">
+                <Button variant="outline" className="w-full" onClick={() => toast({ title: "Contact Supplier", description: "Messaging feature will be available soon." })}>
                   Contact Supplier
                 </Button>
-                <Button variant="outline" className="w-full">
+                <Button variant="outline" className="w-full" onClick={() => toast({ title: "Report Issue", description: "Issue reporting will be available soon. For urgent issues, contact support." })}>
                   Report Issue
                 </Button>
               </CardContent>
@@ -275,6 +276,7 @@ const OrderTracking = () => {
           </div>
         </div>
       </main>
+      <Footer />
     </div>
   );
 };

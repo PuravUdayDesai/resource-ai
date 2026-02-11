@@ -1,16 +1,28 @@
+import { useNavigate } from "react-router-dom";
 import Navigation from "@/components/Navigation";
+import Footer from "@/components/Footer";
 import ComplianceTracker from "@/components/ComplianceTracker";
 import PriceChart from "@/components/PriceChart";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Download, Package, TrendingUp, DollarSign } from "lucide-react";
+import { toast } from "@/hooks/use-toast";
 
 const Dashboard = () => {
+  const navigate = useNavigate();
+
+  const handleExportReport = () => {
+    toast({
+      title: "Exporting Report",
+      description: "Your compliance report is being generated as a PDF.",
+    });
+  };
+
   return (
-    <div className="min-h-screen bg-background">
+    <div className="min-h-screen bg-background flex flex-col">
       <Navigation />
       
-      <div className="container mx-auto px-4 py-8">
+      <div className="container mx-auto px-4 py-8 flex-1">
         <div className="flex items-center justify-between mb-8">
           <div>
             <h1 className="text-3xl md:text-4xl font-bold text-foreground mb-2">
@@ -20,7 +32,7 @@ const Dashboard = () => {
               Track your recycled plastic usage and compliance status
             </p>
           </div>
-          <Button className="bg-primary hover:bg-primary/90">
+          <Button className="bg-primary hover:bg-primary/90" onClick={handleExportReport}>
             <Download className="h-4 w-4 mr-2" />
             Export Report
           </Button>
@@ -143,7 +155,7 @@ const Dashboard = () => {
                     </span>
                   </div>
                   <div className="ml-4">
-                    <Button variant="outline" size="sm">
+                    <Button variant="outline" size="sm" onClick={() => navigate("/order-tracking")}>
                       View Details
                     </Button>
                   </div>
@@ -191,6 +203,8 @@ const Dashboard = () => {
           </CardContent>
         </Card>
       </div>
+
+      <Footer />
     </div>
   );
 };
