@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import Navigation from "@/components/Navigation";
+import Footer from "@/components/Footer";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
@@ -93,7 +94,7 @@ const QuoteComparison = () => {
   };
 
   return (
-    <div className="min-h-screen bg-background">
+    <div className="min-h-screen bg-background flex flex-col">
       <Navigation />
       
       <main className="container mx-auto px-4 py-8">
@@ -104,7 +105,7 @@ const QuoteComparison = () => {
               <h1 className="text-3xl font-bold mb-2">Quote Comparison</h1>
               <p className="text-muted-foreground">RFQ Reference: {rfqId}</p>
             </div>
-            <Button variant="outline" onClick={() => navigate("/enhanced-dashboard")}>
+            <Button variant="outline" onClick={() => navigate("/dashboard")}>
               <FileText className="h-4 w-4 mr-2" />
               View RFQ Details
             </Button>
@@ -324,6 +325,7 @@ const QuoteComparison = () => {
           ))}
         </div>
       </main>
+      <Footer />
     </div>
   );
 };

@@ -1,4 +1,5 @@
 import Navigation from "@/components/Navigation";
+import Footer from "@/components/Footer";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { CheckCircle2, Shield, TrendingDown, Users } from "lucide-react";
@@ -7,7 +8,7 @@ import heroImage from "@/assets/hero-recycling.jpg";
 
 const Index = () => {
   return (
-    <div className="min-h-screen bg-background">
+    <div className="min-h-screen bg-background flex flex-col">
       <Navigation />
       
       {/* Hero Section */}
@@ -17,6 +18,7 @@ const Index = () => {
           src={heroImage} 
           alt="Sustainable recycling manufacturing" 
           className="absolute inset-0 w-full h-full object-cover opacity-20"
+          loading="lazy"
         />
         <div className="container relative mx-auto px-4 py-24 md:py-40">
           <div className="max-w-3xl">
@@ -54,50 +56,22 @@ const Index = () => {
             </p>
           </div>
           <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
-            <Card className="shadow-[var(--shadow-soft)]">
-              <CardContent className="pt-6 text-center">
-                <div className="w-12 h-12 bg-primary/10 rounded-full flex items-center justify-center mx-auto mb-4">
-                  <Shield className="h-6 w-6 text-primary" />
-                </div>
-                <h3 className="font-semibold text-lg mb-2 text-foreground">Quality Verified</h3>
-                <p className="text-sm text-muted-foreground">
-                  All suppliers vetted with FDA, ISO, and chain-of-custody certifications
-                </p>
-              </CardContent>
-            </Card>
-            <Card className="shadow-[var(--shadow-soft)]">
-              <CardContent className="pt-6 text-center">
-                <div className="w-12 h-12 bg-accent/10 rounded-full flex items-center justify-center mx-auto mb-4">
-                  <TrendingDown className="h-6 w-6 text-accent" />
-                </div>
-                <h3 className="font-semibold text-lg mb-2 text-foreground">Fair Pricing</h3>
-                <p className="text-sm text-muted-foreground">
-                  Transparent pricing and historical trends to ensure you pay market rates
-                </p>
-              </CardContent>
-            </Card>
-            <Card className="shadow-[var(--shadow-soft)]">
-              <CardContent className="pt-6 text-center">
-                <div className="w-12 h-12 bg-trust/10 rounded-full flex items-center justify-center mx-auto mb-4">
-                  <CheckCircle2 className="h-6 w-6 text-trust" />
-                </div>
-                <h3 className="font-semibold text-lg mb-2 text-foreground">Compliance Ready</h3>
-                <p className="text-sm text-muted-foreground">
-                  Track your 25% requirement automatically with downloadable reports
-                </p>
-              </CardContent>
-            </Card>
-            <Card className="shadow-[var(--shadow-soft)]">
-              <CardContent className="pt-6 text-center">
-                <div className="w-12 h-12 bg-success/10 rounded-full flex items-center justify-center mx-auto mb-4">
-                  <Users className="h-6 w-6 text-success" />
-                </div>
-                <h3 className="font-semibold text-lg mb-2 text-foreground">Demand Matching</h3>
-                <p className="text-sm text-muted-foreground">
-                  Get alerts when suppliers have materials that match your needs
-                </p>
-              </CardContent>
-            </Card>
+            {[
+              { icon: Shield, color: "primary", title: "Quality Verified", desc: "All suppliers vetted with FDA, ISO, and chain-of-custody certifications" },
+              { icon: TrendingDown, color: "accent", title: "Fair Pricing", desc: "Transparent pricing and historical trends to ensure you pay market rates" },
+              { icon: CheckCircle2, color: "trust", title: "Compliance Ready", desc: "Track your 25% requirement automatically with downloadable reports" },
+              { icon: Users, color: "success", title: "Demand Matching", desc: "Get alerts when suppliers have materials that match your needs" },
+            ].map((item) => (
+              <Card key={item.title} className="shadow-[var(--shadow-soft)]">
+                <CardContent className="pt-6 text-center">
+                  <div className={`w-12 h-12 bg-${item.color}/10 rounded-full flex items-center justify-center mx-auto mb-4`}>
+                    <item.icon className={`h-6 w-6 text-${item.color}`} />
+                  </div>
+                  <h3 className="font-semibold text-lg mb-2 text-foreground">{item.title}</h3>
+                  <p className="text-sm text-muted-foreground">{item.desc}</p>
+                </CardContent>
+              </Card>
+            ))}
           </div>
         </div>
       </section>
@@ -112,26 +86,10 @@ const Index = () => {
           </div>
           <div className="max-w-4xl mx-auto space-y-8">
             {[
-              {
-                step: "01",
-                title: "Browse Verified Suppliers",
-                description: "Search our marketplace of vetted suppliers offering rPET, rHDPE, rPP, and more.",
-              },
-              {
-                step: "02",
-                title: "Compare Quality & Pricing",
-                description: "Review certifications, pricing, and availability to find the best match for your needs.",
-              },
-              {
-                step: "03",
-                title: "Track Your Compliance",
-                description: "Monitor your recycled plastic usage against the 25% requirement in real-time.",
-              },
-              {
-                step: "04",
-                title: "Generate Reports",
-                description: "Download compliance reports for audits and regulatory submissions.",
-              },
+              { step: "01", title: "Browse Verified Suppliers", description: "Search our marketplace of vetted suppliers offering rPET, rHDPE, rPP, and more." },
+              { step: "02", title: "Compare Quality & Pricing", description: "Review certifications, pricing, and availability to find the best match for your needs." },
+              { step: "03", title: "Track Your Compliance", description: "Monitor your recycled plastic usage against the 25% requirement in real-time." },
+              { step: "04", title: "Generate Reports", description: "Download compliance reports for audits and regulatory submissions." },
             ].map((item) => (
               <div key={item.step} className="flex gap-6">
                 <div className="flex-shrink-0">
@@ -165,6 +123,8 @@ const Index = () => {
           </Link>
         </div>
       </section>
+
+      <Footer />
     </div>
   );
 };

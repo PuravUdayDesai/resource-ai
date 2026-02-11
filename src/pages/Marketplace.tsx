@@ -1,4 +1,5 @@
 import Navigation from "@/components/Navigation";
+import Footer from "@/components/Footer";
 import SupplierCard from "@/components/SupplierCard";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -70,7 +71,7 @@ const mockSuppliers = [
 
 const Marketplace = () => {
   return (
-    <div className="min-h-screen bg-background">
+    <div className="min-h-screen bg-background flex flex-col">
       <Navigation />
       
       <div className="container mx-auto px-4 py-8">
@@ -137,6 +138,7 @@ const Marketplace = () => {
           ))}
         </div>
       </div>
+      <Footer />
     </div>
   );
 };
